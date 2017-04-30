@@ -1,5 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
-import { HttpDecorator, HttpResponse, HttpStatusCode } from '../../../helpers/HttpDecorator';
+import { InterceptedHttp, HttpStatusCode } from 'fluffy-spoon.angular.http';
 import { TokenContainer } from './TokenContainer';
 
 @Injectable()
@@ -19,17 +19,17 @@ export class AuthenticationService {
 		this._redirectUrl = value;
 	}
 
-	public get isSignedIn() {
-		var token = this.tokenContainer.getToken();
+    public get isSignedIn() {
+        var token = this.tokenContainer.accessToken;
 		if (!token) {
 			throw new Error("A token has not been initialized yet.");
 		}
 
-		return !!token.user;
+        return this.tokenContainer.roles.length > 0;
 	}
 
 	constructor(
-		private httpDecorator: HttpDecorator,
+		private http: InterceptedHttp,
 		private tokenContainer: TokenContainer)
 	{
 	}
@@ -45,7 +45,7 @@ export class AuthenticationService {
 
 	public async signIn(
 		email: string,
-		password: string): Promise<AccessTokenResponseUserViewModel>
+		password: string)
 	{
 		email = email
 			.toLowerCase()
@@ -69,15 +69,15 @@ export class AuthenticationService {
 	}
 
 	private async fetchAuthenticatedTokenEnvelope(
-		email: string,
-		password: string): Promise<AccessTokenResponseViewModel>
+		username: string,
+		password: string)
 	{
-		var response = await this.httpDecorator
-			.post<AccessTokenResponseViewModel>('/api/authentication/login', {
-				email: email,
+		var response = await this.http
+			.post('/api/authentication/login', {
+				username: username,
 				password: password
 			});
-		if (response.isFailure) {
+		if (response.) {
 			if (response.statusCode === HttpStatusCode.Unauthorized) {
 				return null;
 			}
@@ -89,7 +89,7 @@ export class AuthenticationService {
 	}
 
 	private async fetchAnonymousTokenEnvelope() {
-		var response = await this.httpDecorator.get<AccessTokenResponseViewModel>('/api/authentication/token');
+		var response = await this.http.get<AccessTokenResponseViewModel>('/api/authentication/token');
 		return response.body;
 	}
 

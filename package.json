@@ -22,7 +22,7 @@
     "@angular/core": "^4.0.2",
     "@angular/platform-browser": "^4.0.2",
     "@angular/router": "^4.0.2",
-    "fluffy-spoon.angular.http": "file:///C:\\Users\\mtc87\\Source\\Repos\\FluffySpoon.Angular.Http",
+    "fluffy-spoon.angular.http": "https://github.com/ffMathy/FluffySpoon.Angular.Http.git",
     "rxjs": "^5.3.0",
     "zone.js": "^0.8.5"
   }
