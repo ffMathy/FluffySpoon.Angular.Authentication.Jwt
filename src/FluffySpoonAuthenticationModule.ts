@@ -1,8 +1,10 @@
 ﻿import { NgModule, FactoryProvider, Injector } from '@angular/core';
 
 export class FluffySpoonAuthenticationModule {
-    static withHttpInterceptor(
-        interceptorType: { new (): HttpInterceptor }): NgModule
+    static withUrls(
+      anonymousTokenUrl: string,
+      authenticatedTokenUrl: string,
+      refreshTokenUrl: string): NgModule
     {
         return {
             providers: [
@@ -30,7 +32,10 @@ export class FluffySpoonAuthenticationModule {
         }
     }
 
-    static withoutHttpInterceptor() {
-        this.withHttpInterceptor(HttpInterceptor);
+    static withDefaultUrls() {
+        return FluffySpoonAuthenticationModule.withUrls(
+            "/api/token/anonymous",
+            "/api/token/authenticated",
+            "/api/token/refresh");
     }
 }
