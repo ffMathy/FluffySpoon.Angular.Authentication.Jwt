@@ -9,7 +9,19 @@ export class AuthenticationService {
 
 	public get redirectUrl() {
 		return this._redirectUrl;
-	}
+    }
+
+    public set anonymousTokenUrl(url: string) {
+
+    }
+
+    public set refreshTokenUrl(url: string) {
+
+    }
+
+    public set authenticatedTokenUrl(url: string) {
+
+    }
 
 	public set redirectUrl(value: string) {
 		if (value != null && value.indexOf('/') !== 0) {
@@ -20,12 +32,12 @@ export class AuthenticationService {
 	}
 
     public get isSignedIn() {
-        var token = this.tokenContainer.accessToken;
+        var token = this.tokenContainer.token;
 		if (!token) {
 			throw new Error("A token has not been initialized yet.");
 		}
 
-        return this.tokenContainer.roles.length > 0;
+        return !this.tokenContainer.isAnonymous;
 	}
 
 	constructor(
@@ -40,7 +52,7 @@ export class AuthenticationService {
 		}
 
 		var newTokenEnvelope = await this._fetchAnonymousTokenPromise;
-		this.tokenContainer.setToken(newTokenEnvelope);
+		this.tokenContainer.token = newTokenEnvelope;
 	}
 
 	public async signIn(

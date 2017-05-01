@@ -6,10 +6,19 @@ import { JsonWebTokenResponse } from "./JsonWebTokenResponse";
 export class TokenContainer {
     private readonly tokenResponseKey = "fluffy-spoon.angular.authentication.jwt.tokenResponse";
     private readonly roleKey = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
-    
-    public get accessToken(): string {
-        if (!this.storedToken) return null;
-        return this.storedToken.access_token;
+
+    public set token(token: string) {
+        sessionStorage.setItem(
+            this.tokenResponseKey,
+            token);
+    }
+
+    public get isAnonymous() {
+        return this.getClaimValue("fluffy-spoon.authentication.jwt.anonymous") === "true";
+    }
+
+    public get token() {
+        return sessionStorage.getItem(this.tokenResponseKey);
     }
 
     public get roles() {
@@ -84,17 +93,7 @@ export class TokenContainer {
     }
 
     private getPayloads() {
-        if (!this.accessToken) return null;
-        return this.accessToken.split(".");
-    }
-
-    public setToken(token: JsonWebTokenResponse) {
-		sessionStorage.setItem(
-			this.tokenResponseKey,
-			JSON.stringify(token));
-    }
-
-    private get storedToken() {
-        return <JsonWebTokenResponse>JSON.parse(sessionStorage.getItem(this.tokenResponseKey));
+        if (!this.token) return null;
+        return this.token.split(".");
     }
 }
