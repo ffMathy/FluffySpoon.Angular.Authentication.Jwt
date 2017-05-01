@@ -18,10 +18,10 @@ export class AnonymousAuthenticationGuard implements CanActivate  {
 	}
 
     public async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        if (!this.tokenContainer.accessToken) {
+        if (!this.tokenContainer.token) {
 			await this.authenticationService.fetchNewAnonymousToken();
 
-            if (!this.tokenContainer.accessToken) {
+            if (!this.tokenContainer.token) {
 				throw new Error("Could not wait for anonymous token properly.");
 			}
 		}

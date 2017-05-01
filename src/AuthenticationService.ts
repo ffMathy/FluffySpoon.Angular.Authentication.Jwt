@@ -1,26 +1,15 @@
 ﻿import { Injectable } from '@angular/core';
-import { InterceptedHttp, HttpStatusCode } from 'fluffy-spoon.angular.http';
+import { ExtendedHttp, HttpStatusCode } from 'fluffy-spoon.angular.http';
 import { TokenContainer } from './TokenContainer';
+import { JsonWebTokenResponse } from './JsonWebTokenResponse';
 
 @Injectable()
 export class AuthenticationService {
 	private _redirectUrl: string;
-	private _fetchAnonymousTokenPromise: Promise<AccessTokenResponseViewModel>;
+	private _fetchAnonymousTokenPromise: Promise<string>;
 
 	public get redirectUrl() {
 		return this._redirectUrl;
-    }
-
-    public set anonymousTokenUrl(url: string) {
-
-    }
-
-    public set refreshTokenUrl(url: string) {
-
-    }
-
-    public set authenticatedTokenUrl(url: string) {
-
     }
 
 	public set redirectUrl(value: string) {
@@ -41,68 +30,73 @@ export class AuthenticationService {
 	}
 
 	constructor(
-		private http: InterceptedHttp,
-		private tokenContainer: TokenContainer)
+        private http: ExtendedHttp,
+        private tokenContainer: TokenContainer,
+        private anonymousTokenUrl: string,
+        private authenticatedTokenUrl: string,
+        private refreshTokenUrl: string)
 	{
 	}
 
 	public async fetchNewAnonymousToken() {
 		if (!this._fetchAnonymousTokenPromise) {
-			this._fetchAnonymousTokenPromise = this.fetchAnonymousTokenEnvelope();
+			this._fetchAnonymousTokenPromise = this.fetchAnonymousToken();
 		}
-
-		var newTokenEnvelope = await this._fetchAnonymousTokenPromise;
-		this.tokenContainer.token = newTokenEnvelope;
+        
+        this.tokenContainer.token = await this._fetchAnonymousTokenPromise;
 	}
 
 	public async signIn(
-		email: string,
+		username: string,
 		password: string)
 	{
-		email = email
+		username = username
 			.toLowerCase()
 			.trim();
 
-		var existingAuthenticatedTokenEnvelope = await this.tokenContainer.getToken();
-		if (existingAuthenticatedTokenEnvelope && (!existingAuthenticatedTokenEnvelope.user || existingAuthenticatedTokenEnvelope.user.email !== email))
+        var existingAuthenticatedTokenEnvelope = await this.tokenContainer.token;
+        if (existingAuthenticatedTokenEnvelope && (this.tokenContainer.isAnonymous || this.tokenContainer.username !== username))
 			existingAuthenticatedTokenEnvelope = null;
 
-		var tokenEnvelope =
+		var newToken =
 			existingAuthenticatedTokenEnvelope ||
 			await this.fetchAuthenticatedTokenEnvelope(
-				email,
+				username,
 				password);
-		if (tokenEnvelope == null)
+		if (newToken == null)
 			return null;
 
-		this.tokenContainer.setToken(tokenEnvelope);
-
-		return tokenEnvelope.user;
+        this.tokenContainer.token = newToken;
+		return this.tokenContainer;
 	}
 
 	private async fetchAuthenticatedTokenEnvelope(
 		username: string,
-		password: string)
+		password: string): Promise<string>
 	{
-		var response = await this.http
-			.post('/api/authentication/login', {
-				username: username,
-				password: password
+        var response = await this.http
+            .postAsync(this.authenticatedTokenUrl, {
+                body: {
+                    username: username,
+                    password: password
+                }
 			});
-		if (response.) {
-			if (response.statusCode === HttpStatusCode.Unauthorized) {
+		if (response) {
+			if (response.status === HttpStatusCode.Unauthorized) {
 				return null;
 			}
 
 			throw new Error("An error occured on the server side.");
 		}
 
-		return response.body;
+        var tokenResponse = <JsonWebTokenResponse>response.json();
+        return tokenResponse.access_token;
 	}
 
-	private async fetchAnonymousTokenEnvelope() {
-		var response = await this.http.get<AccessTokenResponseViewModel>('/api/authentication/token');
-		return response.body;
+    private async fetchAnonymousToken(): Promise<string> {
+        var response = await this.http.getAsync(this.anonymousTokenUrl);
+        var tokenResponse = <JsonWebTokenResponse>response.json();
+        return tokenResponse.access_token;
 	}
 
 }

@@ -33,6 +33,10 @@ export class TokenContainer {
         return this.getClaimTimestamp("exp");
     }
 
+    public get username() {
+        return <string>this.getClaimValue("fluffy-spoon.authentication.jwt.username");
+    }
+
     public get subject() {
         return <string>this.getClaimValue("sub");
     }
