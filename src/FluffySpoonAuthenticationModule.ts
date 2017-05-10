@@ -7,17 +7,22 @@ import { AuthenticationHttpInterceptor } from './AuthenticationHttpInterceptor';
 import { ExtendedHttp, FluffySpoonHttpModule } from 'fluffy-spoon.angular.http';
 
 export class FluffySpoonAuthenticationModule {
-    static withUrls(
-      anonymousTokenUrl: string,
-      authenticatedTokenUrl: string,
-      refreshTokenUrl: string): NgModule
+    static withJwt(): NgModule
     {
         var authenticationService: AuthenticationService;
+        var tokenContainer: TokenContainer;
 
-        var httpInterceptor = new AuthenticationHttpInterceptor();
-
+        var httpInterceptor = new AuthenticationHttpInterceptor(() => tokenContainer);
         return {
             providers: [
+                <FactoryProvider>{
+                    provide: TokenContainer,
+                    useFactory: () =>
+                    {
+                        if (tokenContainer) return tokenContainer;
+                        return tokenContainer = new TokenContainer();
+                    }
+                },
                 <FactoryProvider>{
                     provide: AuthenticationService,
                     useFactory: (
@@ -27,25 +32,15 @@ export class FluffySpoonAuthenticationModule {
                         if (authenticationService) return authenticationService;
                         return authenticationService = new AuthenticationService(
                             http,
-                            tokenContainer,
-                            anonymousTokenUrl,
-                            authenticatedTokenUrl,
-                            refreshTokenUrl);
+                            tokenContainer);
                     },
                     deps: [
                         ExtendedHttp,
                         TokenContainer
                     ]
                 }
-            ],
+            ],  
             imports: [FluffySpoonHttpModule.withHttpInterceptor(httpInterceptor)]
         };
-    }
-
-    static withDefaultUrls() {
-        return FluffySpoonAuthenticationModule.withUrls(
-            "/api/token/anonymous",
-            "/api/token/authenticated",
-            "/api/token/refresh");
     }
 }
