@@ -2,7 +2,6 @@
 import { Headers } from '@angular/http';
 import { ExtendedHttp, HttpStatusCode } from 'fluffy-spoon.angular.http';
 import { TokenContainer } from './TokenContainer';
-import { JsonWebTokenResponse } from './JsonWebTokenResponse';
 
 @Injectable()
 export class AuthenticationService {

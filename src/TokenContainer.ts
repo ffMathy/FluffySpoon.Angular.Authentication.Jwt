@@ -1,7 +1,5 @@
 ﻿import { Injectable } from "@angular/core";
 
-import { JsonWebTokenResponse } from "./JsonWebTokenResponse";
-
 @Injectable()
 export class TokenContainer {
     private readonly tokenResponseKey = "fluffy-spoon.angular.authentication.jwt.tokenResponse";

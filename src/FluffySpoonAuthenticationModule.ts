@@ -1,4 +1,4 @@
-﻿import { NgModule, FactoryProvider, Injector } from '@angular/core';
+﻿import { NgModule, FactoryProvider, Injector, ModuleWithProviders } from '@angular/core';
 
 import { AuthenticationService } from './AuthenticationService';
 import { TokenContainer } from './TokenContainer';
@@ -13,7 +13,7 @@ export class FluffySpoonAuthenticationModule {
         var tokenContainer: TokenContainer;
 
         var httpInterceptor = new AuthenticationHttpInterceptor(() => tokenContainer);
-        return {
+        return <NgModule>{
             providers: [
                 <FactoryProvider>{
                     provide: TokenContainer,
@@ -39,7 +39,7 @@ export class FluffySpoonAuthenticationModule {
                         TokenContainer
                     ]
                 }
-            ],  
+            ],
             imports: [FluffySpoonHttpModule.withHttpInterceptor(httpInterceptor)]
         };
     }
