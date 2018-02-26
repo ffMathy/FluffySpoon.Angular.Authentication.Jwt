@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const AuthenticationService_1 = require("./AuthenticationService");
 const TokenContainer_1 = require("./TokenContainer");
 const AuthenticationHttpInterceptor_1 = require("./AuthenticationHttpInterceptor");

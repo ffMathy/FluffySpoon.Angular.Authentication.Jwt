@@ -16,6 +16,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const http_1 = require("@angular/http");
 const fluffy_spoon_angular_http_1 = require("fluffy-spoon.angular.http");
