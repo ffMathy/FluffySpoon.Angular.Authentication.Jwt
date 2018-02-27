@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,34 +7,34 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = require("@angular/core");
-const router_1 = require("@angular/router");
-const AuthenticationService_1 = require("./AuthenticationService");
-let CredentialAuthenticationGuard = class CredentialAuthenticationGuard {
-    constructor(authenticationService, router) {
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthenticationService } from './AuthenticationService';
+var CredentialAuthenticationGuard = /** @class */ (function () {
+    function CredentialAuthenticationGuard(authenticationService, router) {
         this.authenticationService = authenticationService;
         this.router = router;
     }
-    canActivate(route, state) {
+    CredentialAuthenticationGuard.prototype.canActivate = function (route, state) {
         return this.checkLogin(state.url);
-    }
-    canActivateChild(route, state) {
+    };
+    CredentialAuthenticationGuard.prototype.canActivateChild = function (route, state) {
         return this.canActivate(route, state);
-    }
-    checkLogin(url) {
+    };
+    CredentialAuthenticationGuard.prototype.checkLogin = function (url) {
         if (this.authenticationService.isSignedIn) {
             return true;
         }
         this.authenticationService.redirectUrl = url;
         this.router.navigate(['/login']);
         return false;
-    }
-};
-CredentialAuthenticationGuard = __decorate([
-    core_1.Injectable(),
-    __metadata("design:paramtypes", [AuthenticationService_1.AuthenticationService,
-        router_1.Router])
-], CredentialAuthenticationGuard);
-exports.CredentialAuthenticationGuard = CredentialAuthenticationGuard;
+    };
+    CredentialAuthenticationGuard = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [AuthenticationService,
+            Router])
+    ], CredentialAuthenticationGuard);
+    return CredentialAuthenticationGuard;
+}());
+export { CredentialAuthenticationGuard };
 //# sourceMappingURL=CredentialAuthenticationGuard.js.map

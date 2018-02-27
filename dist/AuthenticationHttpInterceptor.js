@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,35 +7,40 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = require("@angular/core");
-require("rxjs/add/operator/do");
-const http_1 = require("@angular/common/http");
-let AuthenticationHttpInterceptor = class AuthenticationHttpInterceptor {
-    constructor(tokenContainerFactory) {
+import { Injectable } from '@angular/core';
+import 'rxjs/add/operator/do';
+import { HttpResponse } from '@angular/common/http';
+var AuthenticationHttpInterceptor = /** @class */ (function () {
+    function AuthenticationHttpInterceptor(tokenContainerFactory) {
         this.tokenContainerFactory = tokenContainerFactory;
     }
-    intercept(request, next) {
+    AuthenticationHttpInterceptor.prototype.intercept = function (request, next) {
+        var _this = this;
         if (this.tokenContainer.token)
             request.headers.append("Authorization", "Bearer " + this.tokenContainer.token);
-        return next.handle(request).do(httpEvent => {
-            if (httpEvent instanceof http_1.HttpResponse) {
+        return next.handle(request).do(function (httpEvent) {
+            if (httpEvent instanceof HttpResponse) {
                 if (httpEvent.status === 401) {
-                    this.tokenContainer.token = null;
+                    _this.tokenContainer.token = null;
                 }
                 else {
-                    this.tokenContainer.token = httpEvent.headers.get("Token");
+                    _this.tokenContainer.token = httpEvent.headers.get("Token");
                 }
             }
         });
-    }
-    get tokenContainer() {
-        return this.tokenContainerFactory();
-    }
-};
-AuthenticationHttpInterceptor = __decorate([
-    core_1.Injectable(),
-    __metadata("design:paramtypes", [Function])
-], AuthenticationHttpInterceptor);
-exports.AuthenticationHttpInterceptor = AuthenticationHttpInterceptor;
+    };
+    Object.defineProperty(AuthenticationHttpInterceptor.prototype, "tokenContainer", {
+        get: function () {
+            return this.tokenContainerFactory();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    AuthenticationHttpInterceptor = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [Function])
+    ], AuthenticationHttpInterceptor);
+    return AuthenticationHttpInterceptor;
+}());
+export { AuthenticationHttpInterceptor };
 //# sourceMappingURL=AuthenticationHttpInterceptor.js.map

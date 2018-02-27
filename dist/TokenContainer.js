@@ -1,65 +1,111 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = require("@angular/core");
-let TokenContainer = class TokenContainer {
-    constructor() {
+import { Injectable } from "@angular/core";
+var TokenContainer = /** @class */ (function () {
+    function TokenContainer() {
         this.tokenResponseKey = "fluffy-spoon.angular.authentication.jwt.tokenResponse";
         this.roleKey = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
     }
-    set token(token) {
-        sessionStorage.setItem(this.tokenResponseKey, token);
-    }
-    get isAnonymous() {
-        return this.getClaimValue("fluffy-spoon.authentication.jwt.anonymous") === "true";
-    }
-    get token() {
-        return sessionStorage.getItem(this.tokenResponseKey);
-    }
-    get roles() {
-        return this.getClaimValues(this.roleKey);
-    }
-    get issuedAt() {
-        return this.getClaimTimestamp("iat");
-    }
-    get expiresAt() {
-        return this.getClaimTimestamp("exp");
-    }
-    get username() {
-        return this.getClaimValue("fluffy-spoon.authentication.jwt.username");
-    }
-    get subject() {
-        return this.getClaimValue("sub");
-    }
-    get identifier() {
-        return this.getClaimValue("jti");
-    }
-    get validSince() {
-        return this.getClaimTimestamp("nbf");
-    }
-    get issuer() {
-        return this.getClaimValue("iss");
-    }
-    get audience() {
-        return this.getClaimValue("aud");
-    }
-    get claims() {
-        var dataPayload = this.getDataPayload();
-        if (!dataPayload)
-            return null;
-        return JSON.parse(btoa(dataPayload));
-    }
-    getClaimValue(key) {
+    Object.defineProperty(TokenContainer.prototype, "token", {
+        get: function () {
+            return sessionStorage.getItem(this.tokenResponseKey);
+        },
+        set: function (token) {
+            sessionStorage.setItem(this.tokenResponseKey, token);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TokenContainer.prototype, "isAnonymous", {
+        get: function () {
+            return this.getClaimValue("fluffy-spoon.authentication.jwt.anonymous") === "true";
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TokenContainer.prototype, "roles", {
+        get: function () {
+            return this.getClaimValues(this.roleKey);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TokenContainer.prototype, "issuedAt", {
+        get: function () {
+            return this.getClaimTimestamp("iat");
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TokenContainer.prototype, "expiresAt", {
+        get: function () {
+            return this.getClaimTimestamp("exp");
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TokenContainer.prototype, "username", {
+        get: function () {
+            return this.getClaimValue("fluffy-spoon.authentication.jwt.username");
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TokenContainer.prototype, "subject", {
+        get: function () {
+            return this.getClaimValue("sub");
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TokenContainer.prototype, "identifier", {
+        get: function () {
+            return this.getClaimValue("jti");
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TokenContainer.prototype, "validSince", {
+        get: function () {
+            return this.getClaimTimestamp("nbf");
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TokenContainer.prototype, "issuer", {
+        get: function () {
+            return this.getClaimValue("iss");
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TokenContainer.prototype, "audience", {
+        get: function () {
+            return this.getClaimValue("aud");
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TokenContainer.prototype, "claims", {
+        get: function () {
+            var dataPayload = this.getDataPayload();
+            if (!dataPayload)
+                return null;
+            return JSON.parse(btoa(dataPayload));
+        },
+        enumerable: true,
+        configurable: true
+    });
+    TokenContainer.prototype.getClaimValue = function (key) {
         if (!this.claims)
             return null;
         return this.claims[key];
-    }
-    getClaimValues(key) {
+    };
+    TokenContainer.prototype.getClaimValues = function (key) {
         if (!this.claims)
             return [];
         var values = this.claims[key];
@@ -70,25 +116,26 @@ let TokenContainer = class TokenContainer {
             return values;
         }
         return [values];
-    }
-    getClaimTimestamp(key) {
+    };
+    TokenContainer.prototype.getClaimTimestamp = function (key) {
         var timestamp = this.getClaimValue(key);
         return new Date(timestamp * 1000);
-    }
-    getDataPayload() {
+    };
+    TokenContainer.prototype.getDataPayload = function () {
         var payloads = this.getPayloads();
         if (!payloads)
             return null;
         return payloads[1];
-    }
-    getPayloads() {
+    };
+    TokenContainer.prototype.getPayloads = function () {
         if (!this.token)
             return null;
         return this.token.split(".");
-    }
-};
-TokenContainer = __decorate([
-    core_1.Injectable()
-], TokenContainer);
-exports.TokenContainer = TokenContainer;
+    };
+    TokenContainer = __decorate([
+        Injectable()
+    ], TokenContainer);
+    return TokenContainer;
+}());
+export { TokenContainer };
 //# sourceMappingURL=TokenContainer.js.map
