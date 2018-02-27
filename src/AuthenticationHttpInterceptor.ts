@@ -1,40 +1,38 @@
 ﻿import { Injectable } from '@angular/core';
 import { Response, Request, RequestOptionsArgs } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/do';
 
-import { HttpInterceptor, HttpStatusCode } from 'fluffy-spoon.angular.http';
+import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpResponse } from '@angular/common/http';
 import { TokenContainer } from './TokenContainer';
 
 @Injectable()
-export class AuthenticationHttpInterceptor extends HttpInterceptor {
+export class AuthenticationHttpInterceptor implements HttpInterceptor {
     constructor(
         private tokenContainerFactory: () => TokenContainer)
     {
-        super();
-    }
+	}
+
+	public intercept(
+		request: HttpRequest<any>,
+		next: HttpHandler)
+	{
+		if (this.tokenContainer.token)
+			request.headers.append("Authorization", "Bearer " + this.tokenContainer.token);
+
+		return next.handle(request).do(httpEvent => {
+			if (httpEvent instanceof HttpResponse) {
+				if (httpEvent.status === 401) {
+					this.tokenContainer.token = null;
+				} else {
+					this.tokenContainer.token = httpEvent.headers.get("Token");
+				}
+			}
+		});
+
+	}
 
     private get tokenContainer() {
         return this.tokenContainerFactory();
-    }
-
-    configureRequest(request: Request, options: RequestOptionsArgs) {
-        super.configureRequest(request, options);
-
-        var tokenContainer = this.tokenContainerFactory();
-        if (tokenContainer && tokenContainer.token) {
-            request.headers.append("Authorization", "Bearer " + tokenContainer.token);
-        }
-    }
-
-    onSuccessfulRequest(response: Response) {
-        var token = response.headers.get("Token");
-        if (token) {
-            this.tokenContainer.token = token;
-        }
-    }
-
-    onFailedRequest(response: Response) {
-        if (response.status === HttpStatusCode.Unauthorized) {
-            this.tokenContainer.token = null;
-        }
     }
 }

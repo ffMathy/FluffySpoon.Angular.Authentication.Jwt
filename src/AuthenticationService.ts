@@ -1,6 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
-import { Headers } from '@angular/http';
-import { ExtendedHttp, HttpStatusCode } from 'fluffy-spoon.angular.http';
+import { Http, Headers } from '@angular/http';
 import { TokenContainer } from './TokenContainer';
 
 @Injectable()
@@ -32,7 +31,7 @@ export class AuthenticationService {
     }
 
     constructor(
-        private http: ExtendedHttp,
+        private http: Http,
         private tokenContainer: TokenContainer)
     {
         this._tokenUrl = "/api/token";
@@ -77,17 +76,16 @@ export class AuthenticationService {
         var headers = new Headers();
         headers.append("Authorization", "FluffySpoon " + btoa(JSON.stringify(credentials)));
 
-        var response = await this.http
-            .postAsync(this._tokenUrl, {
-                headers: headers
-            });
-        if (response && response.status !== HttpStatusCode.Unauthorized) {
+        var response = await this.http.post(this._tokenUrl, {
+			headers: headers
+		}).toPromise();
+        if (response && response.status !== 401) {
             throw new Error("An error occured on the server side.");
         }
     }
 
-    private async anonymousRequest(): Promise<void> {
-        await this.http.getAsync(this._tokenUrl);
+	private async anonymousRequest(): Promise<void> {
+		await this.http.get(this._tokenUrl).toPromise();
     }
 
 }

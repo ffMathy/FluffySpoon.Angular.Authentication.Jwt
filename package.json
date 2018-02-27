@@ -1,29 +1,30 @@
 {
-  "name": "fluffy-spoon.angular.authentication.jwt",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./dist/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ffMathy/FluffySpoon.Angular.Authentication.Jwt.git"
-  },
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ffMathy/FluffySpoon.Angular.Authentication.Jwt/issues"
-  },
-  "homepage": "https://github.com/ffMathy/FluffySpoon.Angular.Authentication.Jwt#readme",
-  "devDependencies": {},
-  "dependencies": {
-    "@angular/common": "^4.0.2",
-    "@angular/core": "^4.0.2",
-    "@angular/platform-browser": "^4.0.2",
-    "@angular/router": "^4.0.2",
-    "fluffy-spoon.angular.http": "https://github.com/ffMathy/FluffySpoon.Angular.Http.git",
-    "rxjs": "^5.3.0",
-    "zone.js": "^0.8.5"
-  }
+	"name": "fluffy-spoon.angular.authentication.jwt",
+	"version": "1.0.0",
+	"description": "",
+	"main": "./dist/Index.js",
+	"typings": "./dist/Index.d.ts",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ffMathy/FluffySpoon.Angular.Authentication.Jwt.git"
+	},
+	"author": "",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/ffMathy/FluffySpoon.Angular.Authentication.Jwt/issues"
+	},
+	"homepage": "https://github.com/ffMathy/FluffySpoon.Angular.Authentication.Jwt#readme",
+	"devDependencies": {},
+	"dependencies": {
+		"@angular/common": "^4.0.2",
+		"@angular/core": "^4.0.2",
+		"@angular/platform-browser": "^4.0.2",
+		"@angular/router": "^4.0.2",
+		"fluffy-spoon.angular.http": "https://github.com/ffMathy/FluffySpoon.Angular.Http.git",
+		"rxjs": "^5.3.0",
+		"zone.js": "^0.8.5"
+	}
 }

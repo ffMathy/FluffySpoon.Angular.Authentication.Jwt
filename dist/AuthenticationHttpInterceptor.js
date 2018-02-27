@@ -10,32 +10,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
-const fluffy_spoon_angular_http_1 = require("fluffy-spoon.angular.http");
-let AuthenticationHttpInterceptor = class AuthenticationHttpInterceptor extends fluffy_spoon_angular_http_1.HttpInterceptor {
+require("rxjs/add/operator/do");
+const http_1 = require("@angular/common/http");
+let AuthenticationHttpInterceptor = class AuthenticationHttpInterceptor {
     constructor(tokenContainerFactory) {
-        super();
         this.tokenContainerFactory = tokenContainerFactory;
+    }
+    intercept(request, next) {
+        if (this.tokenContainer.token)
+            request.headers.append("Authorization", "Bearer " + this.tokenContainer.token);
+        return next.handle(request).do(httpEvent => {
+            if (httpEvent instanceof http_1.HttpResponse) {
+                if (httpEvent.status === 401) {
+                    this.tokenContainer.token = null;
+                }
+                else {
+                    this.tokenContainer.token = httpEvent.headers.get("Token");
+                }
+            }
+        });
     }
     get tokenContainer() {
         return this.tokenContainerFactory();
-    }
-    configureRequest(request, options) {
-        super.configureRequest(request, options);
-        var tokenContainer = this.tokenContainerFactory();
-        if (tokenContainer && tokenContainer.token) {
-            request.headers.append("Authorization", "Bearer " + tokenContainer.token);
-        }
-    }
-    onSuccessfulRequest(response) {
-        var token = response.headers.get("Token");
-        if (token) {
-            this.tokenContainer.token = token;
-        }
-    }
-    onFailedRequest(response) {
-        if (response.status === fluffy_spoon_angular_http_1.HttpStatusCode.Unauthorized) {
-            this.tokenContainer.token = null;
-        }
     }
 };
 AuthenticationHttpInterceptor = __decorate([

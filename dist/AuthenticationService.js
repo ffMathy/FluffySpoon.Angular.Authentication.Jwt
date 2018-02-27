@@ -19,7 +19,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const http_1 = require("@angular/http");
-const fluffy_spoon_angular_http_1 = require("fluffy-spoon.angular.http");
 const TokenContainer_1 = require("./TokenContainer");
 let AuthenticationService = class AuthenticationService {
     constructor(http, tokenContainer) {
@@ -72,24 +71,23 @@ let AuthenticationService = class AuthenticationService {
             };
             var headers = new http_1.Headers();
             headers.append("Authorization", "FluffySpoon " + btoa(JSON.stringify(credentials)));
-            var response = yield this.http
-                .postAsync(this._tokenUrl, {
+            var response = yield this.http.post(this._tokenUrl, {
                 headers: headers
-            });
-            if (response && response.status !== fluffy_spoon_angular_http_1.HttpStatusCode.Unauthorized) {
+            }).toPromise();
+            if (response && response.status !== 401) {
                 throw new Error("An error occured on the server side.");
             }
         });
     }
     anonymousRequest() {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.http.getAsync(this._tokenUrl);
+            yield this.http.get(this._tokenUrl).toPromise();
         });
     }
 };
 AuthenticationService = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [fluffy_spoon_angular_http_1.ExtendedHttp,
+    __metadata("design:paramtypes", [http_1.Http,
         TokenContainer_1.TokenContainer])
 ], AuthenticationService);
 exports.AuthenticationService = AuthenticationService;

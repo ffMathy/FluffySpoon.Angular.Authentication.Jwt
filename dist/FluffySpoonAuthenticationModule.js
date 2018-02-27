@@ -3,14 +3,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const AuthenticationService_1 = require("./AuthenticationService");
 const TokenContainer_1 = require("./TokenContainer");
 const AuthenticationHttpInterceptor_1 = require("./AuthenticationHttpInterceptor");
-const fluffy_spoon_angular_http_1 = require("fluffy-spoon.angular.http");
+const http_1 = require("@angular/http");
+const http_2 = require("@angular/common/http");
 class FluffySpoonAuthenticationModule {
     static withJwt() {
         var authenticationService;
         var tokenContainer;
-        var httpInterceptor = new AuthenticationHttpInterceptor_1.AuthenticationHttpInterceptor(() => tokenContainer);
         return {
             providers: [
+                {
+                    provide: http_2.HTTP_INTERCEPTORS,
+                    useClass: AuthenticationHttpInterceptor_1.AuthenticationHttpInterceptor,
+                    multi: true
+                },
                 {
                     provide: TokenContainer_1.TokenContainer,
                     useFactory: () => {
@@ -27,12 +32,12 @@ class FluffySpoonAuthenticationModule {
                         return authenticationService = new AuthenticationService_1.AuthenticationService(http, tokenContainer);
                     },
                     deps: [
-                        fluffy_spoon_angular_http_1.ExtendedHttp,
+                        http_1.Http,
                         TokenContainer_1.TokenContainer
                     ]
                 }
             ],
-            imports: [fluffy_spoon_angular_http_1.FluffySpoonHttpModule.withHttpInterceptor(httpInterceptor)]
+            imports: [http_2.HttpClientModule]
         };
     }
 }

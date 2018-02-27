@@ -1,20 +1,26 @@
-﻿import { NgModule, FactoryProvider, Injector, ModuleWithProviders } from '@angular/core';
+﻿import { NgModule, FactoryProvider, ClassProvider, Injector, ModuleWithProviders } from '@angular/core';
 
 import { AuthenticationService } from './AuthenticationService';
 import { TokenContainer } from './TokenContainer';
 import { AuthenticationHttpInterceptor } from './AuthenticationHttpInterceptor';
 
-import { ExtendedHttp, FluffySpoonHttpModule } from 'fluffy-spoon.angular.http';
+import { Http } from '@angular/http';
+
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 export class FluffySpoonAuthenticationModule {
     static withJwt(): NgModule
     {
         var authenticationService: AuthenticationService;
         var tokenContainer: TokenContainer;
-
-        var httpInterceptor = new AuthenticationHttpInterceptor(() => tokenContainer);
+		
         return <NgModule>{
-            providers: [
+			providers: [
+				<ClassProvider>{
+					provide: HTTP_INTERCEPTORS,
+					useClass: AuthenticationHttpInterceptor,
+					multi: true
+				},
                 <FactoryProvider>{
                     provide: TokenContainer,
                     useFactory: () =>
@@ -26,7 +32,7 @@ export class FluffySpoonAuthenticationModule {
                 <FactoryProvider>{
                     provide: AuthenticationService,
                     useFactory: (
-                        http: ExtendedHttp,
+                        http: Http,
                         tokenContainer: TokenContainer) =>
                     {
                         if (authenticationService) return authenticationService;
@@ -35,12 +41,12 @@ export class FluffySpoonAuthenticationModule {
                             tokenContainer);
                     },
                     deps: [
-                        ExtendedHttp,
+                        Http,
                         TokenContainer
                     ]
                 }
-            ],
-            imports: [FluffySpoonHttpModule.withHttpInterceptor(httpInterceptor)]
+			],
+			imports: [HttpClientModule]
         };
     }
 }
