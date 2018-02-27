@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders } from '@angular/core';
 export declare class FluffySpoonAuthenticationModule {
-    static withJwt(): NgModule;
+    static withJwt(): ModuleWithProviders;
 }
