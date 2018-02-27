@@ -8,13 +8,18 @@ import { Http } from '@angular/http';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+@NgModule({
+	declarations: [],
+	exports: []
+})
 export class FluffySpoonAuthenticationModule {
-    static withJwt(): NgModule
+	static withJwt(): ModuleWithProviders
     {
         var authenticationService: AuthenticationService;
         var tokenContainer: TokenContainer;
 		
-        return <NgModule>{
+		return {
+			ngModule: FluffySpoonAuthenticationModule,
 			providers: [
 				<ClassProvider>{
 					provide: HTTP_INTERCEPTORS,
@@ -45,8 +50,7 @@ export class FluffySpoonAuthenticationModule {
                         TokenContainer
                     ]
                 }
-			],
-			imports: [HttpClientModule]
+			]
         };
     }
 }
