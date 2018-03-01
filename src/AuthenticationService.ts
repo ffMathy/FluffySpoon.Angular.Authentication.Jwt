@@ -5,7 +5,6 @@ import { TokenContainer } from './TokenContainer';
 @Injectable()
 export class AuthenticationService {
     private _redirectUrl: string;
-    private _tokenUrl: string;
 
     private _anonymousRequestPromise: Promise<void>;
 
@@ -32,9 +31,9 @@ export class AuthenticationService {
 
     constructor(
         private http: HttpClient,
-        private tokenContainer: TokenContainer)
+		private tokenContainer: TokenContainer,
+		private tokenUrl: string)
     {
-        this._tokenUrl = "/api/token";
     }
 
     public async waitForAnonymousAuthentication() {
@@ -76,14 +75,14 @@ export class AuthenticationService {
         var headers = new HttpHeaders();
         headers.append("Authorization", "FluffySpoon " + btoa(JSON.stringify(credentials)));
 
-        var response = await this.http.get(this._tokenUrl, { observe: 'response', headers }).toPromise();
+        var response = await this.http.get(this.tokenUrl, { observe: 'response', headers }).toPromise();
         if (response && response.status !== 401) {
             throw new Error("An error occured on the server side.");
         }
     }
 
 	private async anonymousRequest(): Promise<void> {
-		await this.http.get(this._tokenUrl).toPromise();
+		await this.http.get(this.tokenUrl).toPromise();
     }
 
 }

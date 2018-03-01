@@ -11,7 +11,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common
 	exports: []
 })
 export class FluffySpoonAuthenticationModule {
-	static forRoot(): ModuleWithProviders
+	static withJwt(requestTokenUrl: string): ModuleWithProviders
     {
         var authenticationService: AuthenticationService;
         var tokenContainer: TokenContainer;
@@ -41,7 +41,8 @@ export class FluffySpoonAuthenticationModule {
                         if (authenticationService) return authenticationService;
                         return authenticationService = new AuthenticationService(
                             http,
-                            tokenContainer);
+							tokenContainer,
+							requestTokenUrl);
                     },
                     deps: [
                         HttpClient,
