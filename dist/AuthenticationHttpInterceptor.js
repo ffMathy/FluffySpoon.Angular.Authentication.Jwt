@@ -22,6 +22,7 @@ var AuthenticationHttpInterceptor = /** @class */ (function () {
         if (this.tokenContainer.token)
             request.headers.append("Authorization", "Bearer " + this.tokenContainer.token);
         return next.handle(request).do(function (httpEvent) {
+            console.log('Intercept response', httpEvent, httpEvent.headers);
             if (httpEvent instanceof HttpResponse) {
                 if (httpEvent.status === 401) {
                     _this.tokenContainer.token = null;
