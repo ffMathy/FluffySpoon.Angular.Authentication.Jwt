@@ -50,13 +50,9 @@ export class AuthenticationService {
         username = username
             .toLowerCase()
             .trim();
-
-        var existingAuthenticatedTokenEnvelope = await this.tokenContainer.token;
-        if (existingAuthenticatedTokenEnvelope && (this.tokenContainer.isAnonymous || this.tokenContainer.username !== username))
-            existingAuthenticatedTokenEnvelope = null;
-
-        if (existingAuthenticatedTokenEnvelope)
-            return;
+			
+		if (this.tokenContainer.token && (this.tokenContainer.isAnonymous || this.tokenContainer.username !== username))
+			this.tokenContainer.token = null;
 
         await this.authenticate(
             username,
@@ -75,8 +71,8 @@ export class AuthenticationService {
         var headers = new HttpHeaders();
         headers.append("Authorization", "FluffySpoon " + btoa(JSON.stringify(credentials)));
 
-        var response = await this.http.get(this.tokenUrl, { observe: 'response', headers }).toPromise();
-        if (response && response.status !== 401) {
+		var response = await this.http.get(this.tokenUrl, { observe: 'response', headers }).toPromise();
+		if (response && !response.ok && response.status !== 401) {
             throw new Error("An error occured on the server side.");
         }
     }

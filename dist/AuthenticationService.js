@@ -93,22 +93,16 @@ var AuthenticationService = /** @class */ (function () {
     };
     AuthenticationService.prototype.signIn = function (username, password) {
         return __awaiter(this, void 0, void 0, function () {
-            var existingAuthenticatedTokenEnvelope;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         username = username
                             .toLowerCase()
                             .trim();
-                        return [4 /*yield*/, this.tokenContainer.token];
-                    case 1:
-                        existingAuthenticatedTokenEnvelope = _a.sent();
-                        if (existingAuthenticatedTokenEnvelope && (this.tokenContainer.isAnonymous || this.tokenContainer.username !== username))
-                            existingAuthenticatedTokenEnvelope = null;
-                        if (existingAuthenticatedTokenEnvelope)
-                            return [2 /*return*/];
+                        if (this.tokenContainer.token && (this.tokenContainer.isAnonymous || this.tokenContainer.username !== username))
+                            this.tokenContainer.token = null;
                         return [4 /*yield*/, this.authenticate(username, password)];
-                    case 2:
+                    case 1:
                         _a.sent();
                         return [2 /*return*/];
                 }
@@ -130,7 +124,7 @@ var AuthenticationService = /** @class */ (function () {
                         return [4 /*yield*/, this.http.get(this.tokenUrl, { observe: 'response', headers: headers }).toPromise()];
                     case 1:
                         response = _a.sent();
-                        if (response && response.status !== 401) {
+                        if (response && !response.ok && response.status !== 401) {
                             throw new Error("An error occured on the server side.");
                         }
                         return [2 /*return*/];
