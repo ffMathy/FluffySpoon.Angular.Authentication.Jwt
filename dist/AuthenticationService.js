@@ -46,10 +46,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TokenContainer } from './TokenContainer';
 var AuthenticationService = /** @class */ (function () {
-    function AuthenticationService(http, tokenContainer) {
+    function AuthenticationService(http, tokenContainer, tokenUrl) {
         this.http = http;
         this.tokenContainer = tokenContainer;
-        this._tokenUrl = "/api/token";
+        this.tokenUrl = tokenUrl;
     }
     Object.defineProperty(AuthenticationService.prototype, "redirectUrl", {
         get: function () {
@@ -127,7 +127,7 @@ var AuthenticationService = /** @class */ (function () {
                         };
                         headers = new HttpHeaders();
                         headers.append("Authorization", "FluffySpoon " + btoa(JSON.stringify(credentials)));
-                        return [4 /*yield*/, this.http.get(this._tokenUrl, { observe: 'response', headers: headers }).toPromise()];
+                        return [4 /*yield*/, this.http.get(this.tokenUrl, { observe: 'response', headers: headers }).toPromise()];
                     case 1:
                         response = _a.sent();
                         if (response && response.status !== 401) {
@@ -142,7 +142,7 @@ var AuthenticationService = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.http.get(this._tokenUrl).toPromise()];
+                    case 0: return [4 /*yield*/, this.http.get(this.tokenUrl).toPromise()];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];
@@ -153,7 +153,7 @@ var AuthenticationService = /** @class */ (function () {
     AuthenticationService = __decorate([
         Injectable(),
         __metadata("design:paramtypes", [HttpClient,
-            TokenContainer])
+            TokenContainer, String])
     ], AuthenticationService);
     return AuthenticationService;
 }());

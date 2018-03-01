@@ -1,4 +1,4 @@
 import { ModuleWithProviders } from '@angular/core';
 export declare class FluffySpoonAuthenticationModule {
-    static forRoot(): ModuleWithProviders;
+    static withJwt(requestTokenUrl: string): ModuleWithProviders;
 }

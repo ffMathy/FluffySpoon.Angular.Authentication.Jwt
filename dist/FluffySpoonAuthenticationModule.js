@@ -13,7 +13,7 @@ var FluffySpoonAuthenticationModule = /** @class */ (function () {
     function FluffySpoonAuthenticationModule() {
     }
     FluffySpoonAuthenticationModule_1 = FluffySpoonAuthenticationModule;
-    FluffySpoonAuthenticationModule.forRoot = function () {
+    FluffySpoonAuthenticationModule.withJwt = function (requestTokenUrl) {
         var authenticationService;
         var tokenContainer;
         return {
@@ -37,7 +37,7 @@ var FluffySpoonAuthenticationModule = /** @class */ (function () {
                     useFactory: function (http, tokenContainer) {
                         if (authenticationService)
                             return authenticationService;
-                        return authenticationService = new AuthenticationService(http, tokenContainer);
+                        return authenticationService = new AuthenticationService(http, tokenContainer, requestTokenUrl);
                     },
                     deps: [
                         HttpClient,
