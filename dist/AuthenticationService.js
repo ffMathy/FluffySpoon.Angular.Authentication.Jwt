@@ -111,7 +111,7 @@ var AuthenticationService = /** @class */ (function () {
     };
     AuthenticationService.prototype.authenticate = function (username, password) {
         return __awaiter(this, void 0, void 0, function () {
-            var credentials, headers, response;
+            var credentials, response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -119,9 +119,13 @@ var AuthenticationService = /** @class */ (function () {
                             Username: username,
                             Password: password
                         };
-                        headers = new HttpHeaders();
-                        headers.append("Authorization", "FluffySpoon " + btoa(JSON.stringify(credentials)));
-                        return [4 /*yield*/, this.http.get(this.tokenUrl, { observe: 'response', headers: headers }).toPromise()];
+                        return [4 /*yield*/, this.http.get(this.tokenUrl, {
+                                observe: 'response',
+                                responseType: 'text',
+                                headers: new HttpHeaders({
+                                    Authorization: "FluffySpoon " + btoa(JSON.stringify(credentials))
+                                })
+                            }).toPromise()];
                     case 1:
                         response = _a.sent();
                         if (response && !response.ok && response.status !== 401) {
