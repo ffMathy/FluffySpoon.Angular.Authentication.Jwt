@@ -13,7 +13,7 @@ var FluffySpoonAuthenticationModule = /** @class */ (function () {
     function FluffySpoonAuthenticationModule() {
     }
     FluffySpoonAuthenticationModule_1 = FluffySpoonAuthenticationModule;
-    FluffySpoonAuthenticationModule.withJwt = function () {
+    FluffySpoonAuthenticationModule.forRoot = function () {
         var authenticationService;
         var tokenContainer;
         return {

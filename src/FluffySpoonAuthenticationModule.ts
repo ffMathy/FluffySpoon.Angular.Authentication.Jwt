@@ -11,7 +11,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common
 	exports: []
 })
 export class FluffySpoonAuthenticationModule {
-	static withJwt(): ModuleWithProviders
+	static forRoot(): ModuleWithProviders
     {
         var authenticationService: AuthenticationService;
         var tokenContainer: TokenContainer;
