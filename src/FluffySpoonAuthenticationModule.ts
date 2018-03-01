@@ -4,7 +4,7 @@ import { AuthenticationService } from './AuthenticationService';
 import { TokenContainer } from './TokenContainer';
 import { AuthenticationHttpInterceptor } from './AuthenticationHttpInterceptor';
 
-import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 
 @NgModule({
 	declarations: [],

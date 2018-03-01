@@ -14,9 +14,11 @@ import { TokenContainer } from './TokenContainer';
 var AuthenticationHttpInterceptor = /** @class */ (function () {
     function AuthenticationHttpInterceptor(tokenContainer) {
         this.tokenContainer = tokenContainer;
+        console.log('Interceptor instantiated');
     }
     AuthenticationHttpInterceptor.prototype.intercept = function (request, next) {
         var _this = this;
+        console.log('Intercept called', this.tokenContainer.token);
         if (this.tokenContainer.token)
             request.headers.append("Authorization", "Bearer " + this.tokenContainer.token);
         return next.handle(request).do(function (httpEvent) {

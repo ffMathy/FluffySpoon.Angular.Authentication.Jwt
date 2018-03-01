@@ -9,13 +9,16 @@ import { TokenContainer } from './TokenContainer';
 export class AuthenticationHttpInterceptor implements HttpInterceptor {
     constructor(
         private tokenContainer: TokenContainer)
-    {
+	{
+		console.log('Interceptor instantiated');
 	}
 
 	public intercept(
 		request: HttpRequest<any>,
 		next: HttpHandler)
 	{
+		console.log('Intercept called', this.tokenContainer.token);
+
 		if (this.tokenContainer.token)
 			request.headers.append("Authorization", "Bearer " + this.tokenContainer.token);
 
