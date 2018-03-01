@@ -71,7 +71,7 @@ export class AuthenticationService {
         var headers = new HttpHeaders();
         headers.append("Authorization", "FluffySpoon " + btoa(JSON.stringify(credentials)));
 
-		var response = await this.http.get(this.tokenUrl, { observe: 'response', headers }).toPromise();
+		var response = await this.http.get(this.tokenUrl, { observe: 'response', headers: headers }).toPromise();
 		if (response && !response.ok && response.status !== 401) {
             throw new Error("An error occured on the server side.");
         }
