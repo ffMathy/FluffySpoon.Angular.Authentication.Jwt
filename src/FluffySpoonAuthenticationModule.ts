@@ -24,30 +24,30 @@ export class FluffySpoonAuthenticationModule {
 					useClass: AuthenticationHttpInterceptor,
 					multi: true
 				},
-                <FactoryProvider>{
-                    provide: TokenContainer,
-                    useFactory: () =>
-                    {
-                        if (tokenContainer) return tokenContainer;
-                        return tokenContainer = new TokenContainer();
-                    }
-                },
-                <FactoryProvider>{
-                    provide: AuthenticationService,
-                    useFactory: (
-                        http: HttpClient,
-                        tokenContainer: TokenContainer) =>
-                    {
-                        if (authenticationService) return authenticationService;
-                        return authenticationService = new AuthenticationService(
-                            http,
-                            tokenContainer);
-                    },
-                    deps: [
-                        HttpClient,
-                        TokenContainer
-                    ]
-                }
+                //<FactoryProvider>{
+                //    provide: TokenContainer,
+                //    useFactory: () =>
+                //    {
+                //        if (tokenContainer) return tokenContainer;
+                //        return tokenContainer = new TokenContainer();
+                //    }
+                //},
+                //<FactoryProvider>{
+                //    provide: AuthenticationService,
+                //    useFactory: (
+                //        http: HttpClient,
+                //        tokenContainer: TokenContainer) =>
+                //    {
+                //        if (authenticationService) return authenticationService;
+                //        return authenticationService = new AuthenticationService(
+                //            http,
+                //            tokenContainer);
+                //    },
+                //    deps: [
+                //        HttpClient,
+                //        TokenContainer
+                //    ]
+                //}
 			]
         };
     }
