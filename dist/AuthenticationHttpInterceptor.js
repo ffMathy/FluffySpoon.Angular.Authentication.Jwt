@@ -22,7 +22,7 @@ var AuthenticationHttpInterceptor = /** @class */ (function () {
         var newRequest = request;
         if (this.tokenContainer.token) {
             newRequest = request.clone({
-                headers: request.headers.append("Authorization", "Bearer " + this.tokenContainer.token)
+                headers: request.headers.set("Authorization", "Bearer " + this.tokenContainer.token)
             });
         }
         return next.handle(newRequest).do(function (httpEvent) {

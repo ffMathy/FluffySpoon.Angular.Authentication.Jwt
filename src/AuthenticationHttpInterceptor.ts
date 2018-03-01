@@ -22,7 +22,7 @@ export class AuthenticationHttpInterceptor implements HttpInterceptor {
 		var newRequest = request;
 		if (this.tokenContainer.token) {
 			newRequest = request.clone({
-				headers: request.headers.append("Authorization", "Bearer " + this.tokenContainer.token)
+				headers: request.headers.set("Authorization", "Bearer " + this.tokenContainer.token)
 			});
 		}
 			
