@@ -8,7 +8,7 @@ import { TokenContainer } from './TokenContainer';
 @Injectable()
 export class AuthenticationHttpInterceptor implements HttpInterceptor {
     constructor(
-        private tokenContainerFactory: () => TokenContainer)
+        private tokenContainer: TokenContainer)
     {
 	}
 
