@@ -8,7 +8,7 @@ export class TokenContainer {
     public set token(token: string) {
         sessionStorage.setItem(
             this.tokenResponseKey,
-            token);
+            token || '');
     }
 
     public get isAnonymous() {
@@ -16,7 +16,7 @@ export class TokenContainer {
     }
 
     public get token() {
-        return sessionStorage.getItem(this.tokenResponseKey);
+        return sessionStorage.getItem(this.tokenResponseKey) || null;
     }
 
     public get roles() {

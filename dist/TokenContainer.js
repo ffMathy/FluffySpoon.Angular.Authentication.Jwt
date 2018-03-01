@@ -12,10 +12,10 @@ var TokenContainer = /** @class */ (function () {
     }
     Object.defineProperty(TokenContainer.prototype, "token", {
         get: function () {
-            return sessionStorage.getItem(this.tokenResponseKey);
+            return sessionStorage.getItem(this.tokenResponseKey) || null;
         },
         set: function (token) {
-            sessionStorage.setItem(this.tokenResponseKey, token);
+            sessionStorage.setItem(this.tokenResponseKey, token || '');
         },
         enumerable: true,
         configurable: true
