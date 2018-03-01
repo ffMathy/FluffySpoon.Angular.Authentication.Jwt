@@ -1,6 +1,6 @@
 {
 	"name": "fluffy-spoon.angular.authentication.jwt",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "",
 	"main": "./dist/Index.js",
 	"typings": "./dist/Index.d.ts",
@@ -19,9 +19,11 @@
 	"homepage": "https://github.com/ffMathy/FluffySpoon.Angular.Authentication.Jwt#readme",
 	"devDependencies": {},
 	"dependencies": {
+		"@angular/platform-browser": "^4.0.2",
 		"@angular/common": "^4.0.2",
 		"@angular/core": "^4.0.2",
 		"@angular/router": "^4.0.2",
+		"@angular/http": "^4.0.2",
 		"rxjs": "^5.3.0",
 		"zone.js": "^0.8.5"
 	}
