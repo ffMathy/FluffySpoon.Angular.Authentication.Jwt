@@ -14,7 +14,6 @@ import { TokenContainer } from './TokenContainer';
 var AuthenticationHttpInterceptor = /** @class */ (function () {
     function AuthenticationHttpInterceptor(tokenContainer) {
         this.tokenContainer = tokenContainer;
-        console.log('Interceptor instantiated');
     }
     AuthenticationHttpInterceptor.prototype.intercept = function (request, next) {
         var _this = this;
@@ -24,7 +23,6 @@ var AuthenticationHttpInterceptor = /** @class */ (function () {
                 headers: request.headers.set("Authorization", "Bearer " + this.tokenContainer.token)
             });
         }
-        console.log('Intercept request', newRequest, this.tokenContainer.token);
         return next.handle(newRequest).do(function (httpEvent) {
             if (httpEvent instanceof HttpResponse) {
                 if (httpEvent.status === 401) {
@@ -33,7 +31,6 @@ var AuthenticationHttpInterceptor = /** @class */ (function () {
                 else {
                     _this.tokenContainer.token = httpEvent.headers.get("Token");
                 }
-                console.log('Intercept response', httpEvent, _this.tokenContainer.token);
             }
         });
     };

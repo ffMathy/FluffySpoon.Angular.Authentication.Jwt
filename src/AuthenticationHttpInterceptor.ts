@@ -10,7 +10,6 @@ export class AuthenticationHttpInterceptor implements HttpInterceptor {
     constructor(
         private tokenContainer: TokenContainer)
 	{
-		console.log('Interceptor instantiated');
 	}
 
 	public intercept(
@@ -23,9 +22,7 @@ export class AuthenticationHttpInterceptor implements HttpInterceptor {
 				headers: request.headers.set("Authorization", "Bearer " + this.tokenContainer.token)
 			});
 		}
-
-		console.log('Intercept request', newRequest, this.tokenContainer.token);
-			
+		
 		return next.handle(newRequest).do(httpEvent => {
 			if (httpEvent instanceof HttpResponse) {
 				if (httpEvent.status === 401) {
@@ -33,7 +30,6 @@ export class AuthenticationHttpInterceptor implements HttpInterceptor {
 				} else {
 					this.tokenContainer.token = httpEvent.headers.get("Token");
 				}
-				console.log('Intercept response', httpEvent, this.tokenContainer.token);
 			}
 		});
 
