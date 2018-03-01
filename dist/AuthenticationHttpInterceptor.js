@@ -27,13 +27,13 @@ var AuthenticationHttpInterceptor = /** @class */ (function () {
         }
         return next.handle(newRequest).do(function (httpEvent) {
             if (httpEvent instanceof HttpResponse) {
-                console.log('Intercept response', httpEvent);
                 if (httpEvent.status === 401) {
                     _this.tokenContainer.token = null;
                 }
                 else {
                     _this.tokenContainer.token = httpEvent.headers.get("Token");
                 }
+                console.log('Intercept response', httpEvent, _this.tokenContainer.token);
             }
         });
     };

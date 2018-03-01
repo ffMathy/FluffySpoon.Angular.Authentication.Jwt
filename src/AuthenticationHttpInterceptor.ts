@@ -28,12 +28,12 @@ export class AuthenticationHttpInterceptor implements HttpInterceptor {
 			
 		return next.handle(newRequest).do(httpEvent => {
 			if (httpEvent instanceof HttpResponse) {
-				console.log('Intercept response', httpEvent);
 				if (httpEvent.status === 401) {
 					this.tokenContainer.token = null;
 				} else {
 					this.tokenContainer.token = httpEvent.headers.get("Token");
 				}
+				console.log('Intercept response', httpEvent, this.tokenContainer.token);
 			}
 		});
 
