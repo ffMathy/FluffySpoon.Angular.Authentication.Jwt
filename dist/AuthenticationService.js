@@ -43,7 +43,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TokenContainer } from './TokenContainer';
 var AuthenticationService = /** @class */ (function () {
     function AuthenticationService(http, tokenContainer) {
@@ -125,11 +125,9 @@ var AuthenticationService = /** @class */ (function () {
                             Username: username,
                             Password: password
                         };
-                        headers = new Headers();
+                        headers = new HttpHeaders();
                         headers.append("Authorization", "FluffySpoon " + btoa(JSON.stringify(credentials)));
-                        return [4 /*yield*/, this.http.post(this._tokenUrl, {
-                                headers: headers
-                            }).toPromise()];
+                        return [4 /*yield*/, this.http.get(this._tokenUrl, { observe: 'response', headers: headers }).toPromise()];
                     case 1:
                         response = _a.sent();
                         if (response && response.status !== 401) {
@@ -154,7 +152,7 @@ var AuthenticationService = /** @class */ (function () {
     };
     AuthenticationService = __decorate([
         Injectable(),
-        __metadata("design:paramtypes", [Http,
+        __metadata("design:paramtypes", [HttpClient,
             TokenContainer])
     ], AuthenticationService);
     return AuthenticationService;

@@ -8,8 +8,7 @@ import { NgModule } from '@angular/core';
 import { AuthenticationService } from './AuthenticationService';
 import { TokenContainer } from './TokenContainer';
 import { AuthenticationHttpInterceptor } from './AuthenticationHttpInterceptor';
-import { Http } from '@angular/http';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 var FluffySpoonAuthenticationModule = /** @class */ (function () {
     function FluffySpoonAuthenticationModule() {
     }
@@ -41,7 +40,7 @@ var FluffySpoonAuthenticationModule = /** @class */ (function () {
                         return authenticationService = new AuthenticationService(http, tokenContainer);
                     },
                     deps: [
-                        Http,
+                        HttpClient,
                         TokenContainer
                     ]
                 }

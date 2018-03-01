@@ -4,9 +4,7 @@ import { AuthenticationService } from './AuthenticationService';
 import { TokenContainer } from './TokenContainer';
 import { AuthenticationHttpInterceptor } from './AuthenticationHttpInterceptor';
 
-import { Http } from '@angular/http';
-
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 
 @NgModule({
 	declarations: [],
@@ -37,7 +35,7 @@ export class FluffySpoonAuthenticationModule {
                 <FactoryProvider>{
                     provide: AuthenticationService,
                     useFactory: (
-                        http: Http,
+                        http: HttpClient,
                         tokenContainer: TokenContainer) =>
                     {
                         if (authenticationService) return authenticationService;
@@ -46,7 +44,7 @@ export class FluffySpoonAuthenticationModule {
                             tokenContainer);
                     },
                     deps: [
-                        Http,
+                        HttpClient,
                         TokenContainer
                     ]
                 }

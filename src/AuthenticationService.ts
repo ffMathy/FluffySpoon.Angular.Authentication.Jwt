@@ -1,5 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TokenContainer } from './TokenContainer';
 
 @Injectable()
@@ -31,7 +31,7 @@ export class AuthenticationService {
     }
 
     constructor(
-        private http: Http,
+        private http: HttpClient,
         private tokenContainer: TokenContainer)
     {
         this._tokenUrl = "/api/token";
@@ -73,12 +73,10 @@ export class AuthenticationService {
             Password: password
         };
 
-        var headers = new Headers();
+        var headers = new HttpHeaders();
         headers.append("Authorization", "FluffySpoon " + btoa(JSON.stringify(credentials)));
 
-        var response = await this.http.post(this._tokenUrl, {
-			headers: headers
-		}).toPromise();
+        var response = await this.http.get(this._tokenUrl, { observe: 'response', headers }).toPromise();
         if (response && response.status !== 401) {
             throw new Error("An error occured on the server side.");
         }
