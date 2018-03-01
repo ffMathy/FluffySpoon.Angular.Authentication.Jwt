@@ -17,14 +17,14 @@ export class AuthenticationHttpInterceptor implements HttpInterceptor {
 		request: HttpRequest<any>,
 		next: HttpHandler)
 	{
-		console.log('Intercept request', request, this.tokenContainer.token);
-
-		var newRequest = request;
+		var newRequest = request.clone();
 		if (this.tokenContainer.token) {
-			newRequest = request.clone({
+			newRequest = newRequest.clone({
 				headers: request.headers.set("Authorization", "Bearer " + this.tokenContainer.token)
 			});
 		}
+
+		console.log('Intercept request', newRequest, this.tokenContainer.token);
 			
 		return next.handle(newRequest).do(httpEvent => {
 			if (httpEvent instanceof HttpResponse) {

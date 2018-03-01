@@ -18,13 +18,13 @@ var AuthenticationHttpInterceptor = /** @class */ (function () {
     }
     AuthenticationHttpInterceptor.prototype.intercept = function (request, next) {
         var _this = this;
-        console.log('Intercept request', request, this.tokenContainer.token);
-        var newRequest = request;
+        var newRequest = request.clone();
         if (this.tokenContainer.token) {
-            newRequest = request.clone({
+            newRequest = newRequest.clone({
                 headers: request.headers.set("Authorization", "Bearer " + this.tokenContainer.token)
             });
         }
+        console.log('Intercept request', newRequest, this.tokenContainer.token);
         return next.handle(newRequest).do(function (httpEvent) {
             if (httpEvent instanceof HttpResponse) {
                 if (httpEvent.status === 401) {
