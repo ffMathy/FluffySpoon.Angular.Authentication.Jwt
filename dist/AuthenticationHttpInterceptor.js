@@ -10,9 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/do';
 import { HttpResponse } from '@angular/common/http';
+import { TokenContainer } from './TokenContainer';
 var AuthenticationHttpInterceptor = /** @class */ (function () {
-    function AuthenticationHttpInterceptor(tokenContainerFactory) {
-        this.tokenContainerFactory = tokenContainerFactory;
+    function AuthenticationHttpInterceptor(tokenContainer) {
+        this.tokenContainer = tokenContainer;
     }
     AuthenticationHttpInterceptor.prototype.intercept = function (request, next) {
         var _this = this;
@@ -29,16 +30,9 @@ var AuthenticationHttpInterceptor = /** @class */ (function () {
             }
         });
     };
-    Object.defineProperty(AuthenticationHttpInterceptor.prototype, "tokenContainer", {
-        get: function () {
-            return this.tokenContainerFactory();
-        },
-        enumerable: true,
-        configurable: true
-    });
     AuthenticationHttpInterceptor = __decorate([
         Injectable(),
-        __metadata("design:paramtypes", [Function])
+        __metadata("design:paramtypes", [TokenContainer])
     ], AuthenticationHttpInterceptor);
     return AuthenticationHttpInterceptor;
 }());

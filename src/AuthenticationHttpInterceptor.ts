@@ -30,8 +30,4 @@ export class AuthenticationHttpInterceptor implements HttpInterceptor {
 		});
 
 	}
-
-    private get tokenContainer() {
-        return this.tokenContainerFactory();
-    }
 }
