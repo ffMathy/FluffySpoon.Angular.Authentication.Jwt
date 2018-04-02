@@ -1,5 +1,5 @@
 {
-	"name": "fluffy-spoon.angular.authentication.jwt",
+	"name": "@fluffy-spoon/angular.authentication.jwt",
 	"version": "1.0.1",
 	"description": "",
 	"main": "./dist/Index.js",
