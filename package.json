@@ -1,6 +1,6 @@
 {
 	"name": "@fluffy-spoon/angular.authentication.jwt",
-	"version": "1.0.1",
+	"version": "1.0.0",
 	"description": "",
 	"main": "./dist/Index.js",
 	"typings": "./dist/Index.d.ts",
