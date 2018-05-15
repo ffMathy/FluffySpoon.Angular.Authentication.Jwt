@@ -12,7 +12,7 @@ export class TokenContainer {
     }
 
     public get isAnonymous() {
-        return this.getClaimValue("fluffy-spoon.authentication.jwt.anonymous") === "true";
+        return !this.subject;
     }
 
     public get token() {
