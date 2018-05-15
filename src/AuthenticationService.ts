@@ -81,7 +81,12 @@ export class AuthenticationService {
     }
 
 	private async anonymousRequest(): Promise<void> {
-		await this.http.get(this.tokenUrl).toPromise();
+		await this.http.get(this.tokenUrl, {
+			observe: 'response',
+			responseType: 'text',
+			headers: new HttpHeaders({
+				Authorization: "FluffySpoon"
+			}).toPromise();
     }
 
 }
