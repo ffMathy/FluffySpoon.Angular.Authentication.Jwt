@@ -86,7 +86,8 @@ export class AuthenticationService {
 			responseType: 'text',
 			headers: new HttpHeaders({
 				Authorization: "FluffySpoon"
-			}).toPromise();
+			})
+		}).toPromise();
     }
 
 }
