@@ -10,6 +10,10 @@ export class TokenContainer {
             this.tokenResponseKey,
             token || '');
     }
+    
+    public destroyToken(): void {
+        sessionStorage.removeItem(this.tokenResponseKey);
+    }
 
     public get isAnonymous() {
         return !this.subject;
@@ -30,6 +34,10 @@ export class TokenContainer {
     public get expiresAt() {
         return this.getClaimTimestamp("exp");
     }
+    
+    public get username() {
+        return <string>this.getClaimValue("fluffy-spoon.authentication.jwt.username");
+    }
 
     public get subject() {
         return <string>this.getClaimValue("sub");
@@ -49,6 +57,18 @@ export class TokenContainer {
 
     public get audience() {
         return <string>this.getClaimValue("aud");
+    }
+    
+    public get IsExspired() {
+        let now = new Date();
+
+        let nowInSeconds = now.getTime();
+        let expiresInSeconds = this.expiresAt.getTime();
+               
+        if (nowInSeconds > expiresInSeconds)
+            return true;
+
+        return false;
     }
 
     public get claims(): { [key: string]: any } {
