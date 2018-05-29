@@ -34,10 +34,6 @@ export class TokenContainer {
     public get expiresAt() {
         return this.getClaimTimestamp("exp");
     }
-    
-    public get username() {
-        return <string>this.getClaimValue("fluffy-spoon.authentication.jwt.username");
-    }
 
     public get subject() {
         return <string>this.getClaimValue("sub");
@@ -59,16 +55,13 @@ export class TokenContainer {
         return <string>this.getClaimValue("aud");
     }
     
-    public get IsExpired() {
+    public get isExpired() {
         let now = new Date();
 
         let nowInSeconds = now.getTime();
         let expiresInSeconds = this.expiresAt.getTime();
                
-        if (nowInSeconds > expiresInSeconds)
-            return true;
-
-        return false;
+        return nowInSeconds > expiresInSeconds;
     }
 
     public get claims(): { [key: string]: any } {
