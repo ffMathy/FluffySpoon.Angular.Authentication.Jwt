@@ -20,9 +20,12 @@ var TokenContainer = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    TokenContainer.prototype.destroyToken = function () {
+        sessionStorage.removeItem(this.tokenResponseKey);
+    };
     Object.defineProperty(TokenContainer.prototype, "isAnonymous", {
         get: function () {
-            return this.getClaimValue("fluffy-spoon.authentication.jwt.anonymous") === "true";
+            return !this.subject;
         },
         enumerable: true,
         configurable: true
@@ -44,13 +47,6 @@ var TokenContainer = /** @class */ (function () {
     Object.defineProperty(TokenContainer.prototype, "expiresAt", {
         get: function () {
             return this.getClaimTimestamp("exp");
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TokenContainer.prototype, "username", {
-        get: function () {
-            return this.getClaimValue("fluffy-spoon.authentication.jwt.username");
         },
         enumerable: true,
         configurable: true
@@ -86,6 +82,16 @@ var TokenContainer = /** @class */ (function () {
     Object.defineProperty(TokenContainer.prototype, "audience", {
         get: function () {
             return this.getClaimValue("aud");
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TokenContainer.prototype, "isExpired", {
+        get: function () {
+            var now = new Date();
+            var nowInSeconds = now.getTime();
+            var expiresInSeconds = this.expiresAt.getTime();
+            return nowInSeconds > expiresInSeconds;
         },
         enumerable: true,
         configurable: true

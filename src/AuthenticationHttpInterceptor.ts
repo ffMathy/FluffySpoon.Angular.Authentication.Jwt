@@ -1,6 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/do';
+import { tap } from 'rxjs/operators';
+import { Observable, pipe } from 'rxjs';
 
 import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpResponse } from '@angular/common/http';
 import { TokenContainer } from './TokenContainer';
@@ -23,7 +23,7 @@ export class AuthenticationHttpInterceptor implements HttpInterceptor {
 			});
 		}
 		
-		return next.handle(newRequest).do(httpEvent => {
+		return next.handle(newRequest).pipe(tap(httpEvent => {
 			if (httpEvent instanceof HttpResponse) {
 				if (httpEvent.status === 401) {
 					this.tokenContainer.token = null;
@@ -31,7 +31,9 @@ export class AuthenticationHttpInterceptor implements HttpInterceptor {
 					this.tokenContainer.token = httpEvent.headers.get("Token");
 				}
 			}
-		});
+
+			return httpEvent;
+		}));
 
 	}
 }

@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/do';
+import { tap } from 'rxjs/operators';
 import { HttpResponse } from '@angular/common/http';
 import { TokenContainer } from './TokenContainer';
 var AuthenticationHttpInterceptor = /** @class */ (function () {
@@ -23,7 +23,7 @@ var AuthenticationHttpInterceptor = /** @class */ (function () {
                 headers: request.headers.set("Authorization", "Bearer " + this.tokenContainer.token)
             });
         }
-        return next.handle(newRequest).do(function (httpEvent) {
+        return next.handle(newRequest).pipe(tap(function (httpEvent) {
             if (httpEvent instanceof HttpResponse) {
                 if (httpEvent.status === 401) {
                     _this.tokenContainer.token = null;
@@ -32,7 +32,8 @@ var AuthenticationHttpInterceptor = /** @class */ (function () {
                     _this.tokenContainer.token = httpEvent.headers.get("Token");
                 }
             }
-        });
+            return httpEvent;
+        }));
     };
     AuthenticationHttpInterceptor = __decorate([
         Injectable(),
