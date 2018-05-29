@@ -59,7 +59,7 @@ export class TokenContainer {
         return <string>this.getClaimValue("aud");
     }
     
-    public get IsExspired() {
+    public get IsExpired() {
         let now = new Date();
 
         let nowInSeconds = now.getTime();
