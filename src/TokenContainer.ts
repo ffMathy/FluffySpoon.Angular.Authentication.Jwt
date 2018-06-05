@@ -65,10 +65,12 @@ export class TokenContainer {
     }
 
     public get claims(): { [key: string]: any } {
-        var dataPayload = this.getDataPayload();
-        if (!dataPayload) return null;
+        let dataPayload = this.getDataPayload();
+        if (!dataPayload)
+            return null;
+        let base64Fixed = dataPayload.replace('-', '+').replace('_', '/');
 
-        return <Object>JSON.parse(btoa(dataPayload));
+        return <Object>JSON.parse(atob(base64Fixed));
     }
 
     public getClaimValue(key: string) {

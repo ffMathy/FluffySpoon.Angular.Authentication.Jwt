@@ -25,8 +25,9 @@ export class AuthenticationService {
         if (!token) {
             throw new Error("A token has not been initialized yet.");
         }
+        
 
-        return !this.tokenContainer.isAnonymous;
+        return !this.tokenContainer.isExpired && !this.tokenContainer.isAnonymous;
     }
 
     constructor(
