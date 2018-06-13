@@ -18,7 +18,8 @@
 	},
 	"homepage": "https://github.com/ffMathy/FluffySpoon.Angular.Authentication.Jwt#readme",
 	"devDependencies": {},
-	"dependencies": {
+	"dependencies": {},
+	"peerDependencies": {
 		"@angular/common": "latest",
 		"@angular/core": "latest",
 		"@angular/platform-browser": "latest",
