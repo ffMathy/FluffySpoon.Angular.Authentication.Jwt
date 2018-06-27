@@ -4,13 +4,11 @@ import { Observable, pipe } from 'rxjs';
 
 import { HttpInterceptor, HttpHandler, HttpRequest, HttpEventType, HttpEvent, HttpResponse } from '@angular/common/http';
 import { TokenContainer } from './TokenContainer';
-import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthenticationHttpInterceptor implements HttpInterceptor {
     constructor(
-		private tokenContainer: TokenContainer,
-		private router: Router)
+		private tokenContainer: TokenContainer)
 	{
 	}
 
@@ -20,16 +18,12 @@ export class AuthenticationHttpInterceptor implements HttpInterceptor {
 	{
 		let clonedRequest;
 		if (this.isSignedIn) {
-			if (this.tokenContainer.isExpired)
-				this.router.navigateByUrl('/login');
-			else {
-				let token = this.tokenContainer.token;
+			let token = this.tokenContainer.token;
 
-				clonedRequest = request.clone({
-					reportProgress: true,
-					headers: request.headers.set('Authorization', "Bearer " + token)
-				});
-			}
+			clonedRequest = request.clone({
+				reportProgress: true,
+				headers: request.headers.set('Authorization', "Bearer " + token)
+			});
 		} else {
 			clonedRequest = request.clone({
 				reportProgress: true
