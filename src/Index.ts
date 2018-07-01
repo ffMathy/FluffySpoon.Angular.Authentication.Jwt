@@ -1,3 +1,5 @@
+//created by Mathias Lorenzen.
+
 export { AuthenticationHttpInterceptor } from './AuthenticationHttpInterceptor';
 export { AuthenticationService } from './AuthenticationService';
 export { FluffySpoonAuthenticationModule } from './FluffySpoonAuthenticationModule';
