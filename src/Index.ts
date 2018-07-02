@@ -2,5 +2,5 @@
 
 export { AuthenticationHttpInterceptor } from './AuthenticationHttpInterceptor';
 export { AuthenticationService } from './AuthenticationService';
-export { FluffySpoonAuthenticationModule } from './FluffySpoonAuthenticationModule';
+export { withJwt } from './FluffySpoonAuthenticationModule';
 export { TokenContainer } from './TokenContainer';
