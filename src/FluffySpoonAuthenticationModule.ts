@@ -12,16 +12,16 @@ let authenticationService: AuthenticationService;
 let tokenContainer: TokenContainer;
 
 export function getTokenContainer() {
-	if (tokenContainer) return tokenContainer;
-	return tokenContainer = new TokenContainer();
+	return tokenContainer ? tokenContainer : (tokenContainer = new TokenContainer());
 }
 
 export function getAuthenticationService(http: HttpClient, tokenContainer: TokenContainer, tokenUrl: string) {
-	if (authenticationService) return authenticationService;
-	return authenticationService = new AuthenticationService(
-		http,
-		tokenContainer,
-		tokenUrl);
+	return authenticationService ?
+		authenticationService :
+		(authenticationService = new AuthenticationService(
+			http,
+			tokenContainer,
+			tokenUrl));
 }
 
 @NgModule({
