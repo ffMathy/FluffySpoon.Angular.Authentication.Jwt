@@ -23,17 +23,17 @@
 		"@angular/common": "^6.0.7",
 		"@angular/core": "^6.0.7",
 		"@angular/http": "^6.0.7",
-		"rxjs": "^6.2.1",
+		"rxjs": "^5.5.2",
 		"tslib": "^1.9.3",
 		"typescript": "^2.7.2"
 	},
 	"peerDependencies": {
-		"@angular/common": "latest",
-		"@angular/core": "latest",
-		"@angular/platform-browser": "latest",
-		"@angular/router": "latest",
+		"@angular/common": "5.0.3",
+		"@angular/compiler": "5.0.3",
+		"@angular/compiler-cli": "5.0.3",
+		"@angular/core": "5.0.3",
 		"tslib": "latest",
-		"typescript": "2.8.0",
+		"typescript": "2.7.2",
 		"rxjs": "^6.0.0",
 		"zone.js": "~0.8.26"
 	}

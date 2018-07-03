@@ -1,9 +1,9 @@
 ﻿import { Injectable } from '@angular/core';
-import { tap } from 'rxjs/operators';
-import { Observable, pipe } from 'rxjs';
+import 'rxjs/add/operator/do';
 
 import { HttpInterceptor, HttpHandler, HttpRequest, HttpEventType, HttpEvent, HttpResponse } from '@angular/common/http';
 import { TokenContainer } from './TokenContainer';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthenticationHttpInterceptor implements HttpInterceptor {
@@ -12,9 +12,7 @@ export class AuthenticationHttpInterceptor implements HttpInterceptor {
 	{
 	}
 
-	public intercept(
-		request: HttpRequest<any>,
-		next: HttpHandler)
+	intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>
 	{
 		let clonedRequest;
 		if (this.isSignedIn) {
@@ -32,7 +30,7 @@ export class AuthenticationHttpInterceptor implements HttpInterceptor {
 
 		clonedRequest.headers.append('Content-Type', 'application/json; charset=utf-8');
 
-        return next.handle(clonedRequest).pipe(tap(event => this.handleResponseHeader(event as any)));
+        return next.handle(clonedRequest).do(event => this.handleResponseHeader(event as any));
 
 	}
 

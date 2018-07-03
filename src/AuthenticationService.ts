@@ -2,6 +2,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TokenContainer } from './TokenContainer';
 
+import 'rxjs/add/operator/toPromise';
+
 @Injectable()
 export class AuthenticationService {
     private _redirectUrl: string;
