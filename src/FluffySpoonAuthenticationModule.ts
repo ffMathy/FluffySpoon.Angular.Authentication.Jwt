@@ -6,7 +6,7 @@ import { AuthenticationHttpInterceptor } from './AuthenticationHttpInterceptor';
 
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 
-// export const REQUEST_TOKEN_URL: InjectionToken<string> = new InjectionToken<string>('REQUEST_TOKEN_URL');
+export const REQUEST_TOKEN_URL: InjectionToken<string> = new InjectionToken<string>('REQUEST_TOKEN_URL');
 
 export let authenticationService: AuthenticationService = null;
 export let tokenContainer: TokenContainer = null;
@@ -21,7 +21,7 @@ export function getAuthenticationService(http: HttpClient, tokenContainer: Token
 		(authenticationService = new AuthenticationService(
 			http,
 			tokenContainer,
-			tokenUrl));
+			tokenUrl as string));
 }
 
 @NgModule({
@@ -34,6 +34,7 @@ export class FluffySpoonAuthenticationModule {
 		return {
 			ngModule: FluffySpoonAuthenticationModule,
 			providers: [
+				{ provide: REQUEST_TOKEN_URL, useValue: requestTokenUrl },
 				<ClassProvider>{
 					provide: HTTP_INTERCEPTORS,
 					useClass: AuthenticationHttpInterceptor,
@@ -49,7 +50,7 @@ export class FluffySpoonAuthenticationModule {
                     deps: [
                         HttpClient,
 						TokenContainer,
-						requestTokenUrl
+						REQUEST_TOKEN_URL
                     ]
                 }
 			]
