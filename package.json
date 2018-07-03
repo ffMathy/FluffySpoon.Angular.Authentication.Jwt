@@ -5,7 +5,8 @@
 	"main": "./dist/Index.js",
 	"typings": "./dist/Index.d.ts",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"transpile": "ngc",
+		"build": "npm run transpile"
 	},
 	"repository": {
 		"type": "git",
@@ -18,12 +19,21 @@
 	},
 	"homepage": "https://github.com/ffMathy/FluffySpoon.Angular.Authentication.Jwt#readme",
 	"devDependencies": {},
-	"dependencies": {},
+	"dependencies": {
+		"@angular/common": "^6.0.7",
+		"@angular/core": "^6.0.7",
+		"@angular/http": "^6.0.7",
+		"rxjs": "^6.2.1",
+		"tslib": "^1.9.3",
+		"typescript": "^2.7.2"
+	},
 	"peerDependencies": {
 		"@angular/common": "latest",
 		"@angular/core": "latest",
 		"@angular/platform-browser": "latest",
 		"@angular/router": "latest",
+		"tslib": "latest",
+		"typescript": "2.8.0",
 		"rxjs": "^6.0.0",
 		"zone.js": "~0.8.26"
 	}

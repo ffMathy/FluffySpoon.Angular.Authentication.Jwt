@@ -63,11 +63,12 @@ export class TokenContainer {
                
         return nowInSeconds > expiresInSeconds;
     }
-
+ 
     public get claims(): { [key: string]: any } {
         let dataPayload = this.getDataPayload();
         if (!dataPayload)
-            return null;
+            return null; 
+            
         let base64Fixed = dataPayload.replace('-', '+').replace('_', '/');
 
         return <Object>JSON.parse(atob(base64Fixed));

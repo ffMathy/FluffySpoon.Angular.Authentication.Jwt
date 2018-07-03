@@ -8,8 +8,8 @@ import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 
 export const REQUEST_TOKEN_URL = new InjectionToken<string>('REQUEST_TOKEN_URL');
 
-let authenticationService: AuthenticationService;
-let tokenContainer: TokenContainer;
+export let authenticationService: AuthenticationService = null;
+export let tokenContainer: TokenContainer = null;
 
 export function getTokenContainer() {
 	return tokenContainer ? tokenContainer : (tokenContainer = new TokenContainer());

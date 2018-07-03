@@ -32,7 +32,7 @@ export class AuthenticationHttpInterceptor implements HttpInterceptor {
 
 		clonedRequest.headers.append('Content-Type', 'application/json; charset=utf-8');
 
-        return next.handle(clonedRequest).pipe(tap(event => this.handleResponseHeader(event)));
+        return next.handle(clonedRequest).pipe(tap(event => this.handleResponseHeader(event as any)));
 
 	}
 

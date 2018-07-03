@@ -51,7 +51,7 @@ export class AuthenticationService {
         username = username
             .toLowerCase()
             .trim();
-			
+			 
 		if (this.tokenContainer.token && (this.tokenContainer.isAnonymous || this.tokenContainer.subject !== username))
 			this.tokenContainer.token = null;
 
