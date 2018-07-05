@@ -26,7 +26,10 @@ export function getAuthenticationService(http: HttpClient, tokenContainer: Token
 
 @NgModule({
 	declarations: [],
-	exports: []
+	exports: [
+		TokenContainer,
+		AuthenticationService
+	]
 })
 export class FluffySpoonAuthenticationModule {
 	static forRoot(requestTokenUrl: string): ModuleWithProviders
@@ -54,10 +57,6 @@ export class FluffySpoonAuthenticationModule {
 						REQUEST_TOKEN_URL
                     ]
                 }
-			],
-			exports: [
-				TokenContainer,
-				AuthenticationService
 			]
         };
     }
