@@ -25,7 +25,9 @@ export function getAuthenticationService(http: HttpClient, tokenContainer: Token
 }
 
 @NgModule({
-	declarations: [],
+	declarations: [
+		TokenContainer, 
+		AuthenticationService],
 	exports: [
 		TokenContainer,
 		AuthenticationService
