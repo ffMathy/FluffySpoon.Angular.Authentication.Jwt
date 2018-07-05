@@ -54,6 +54,10 @@ export class FluffySpoonAuthenticationModule {
 						REQUEST_TOKEN_URL
                     ]
                 }
+			],
+			exports: [
+				TokenContainer,
+				AuthenticationService
 			]
         };
     }
