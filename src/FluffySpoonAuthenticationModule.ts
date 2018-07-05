@@ -25,13 +25,8 @@ export function getAuthenticationService(http: HttpClient, tokenContainer: Token
 }
 
 @NgModule({
-	declarations: [
-		TokenContainer, 
-		AuthenticationService],
-	exports: [
-		TokenContainer,
-		AuthenticationService
-	]
+	declarations: [],
+	exports: []
 })
 export class FluffySpoonAuthenticationModule {
 	static forRoot(requestTokenUrl: string): ModuleWithProviders
