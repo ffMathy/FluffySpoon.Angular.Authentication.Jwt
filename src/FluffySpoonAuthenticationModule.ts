@@ -38,6 +38,7 @@ export class FluffySpoonAuthenticationModule {
 				<ClassProvider>{
 					provide: HTTP_INTERCEPTORS,
 					useClass: AuthenticationHttpInterceptor,
+					deps: [TokenContainer],
 					multi: true
 				},
                 <FactoryProvider>{
