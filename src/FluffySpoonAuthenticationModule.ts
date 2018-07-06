@@ -35,16 +35,16 @@ export class FluffySpoonAuthenticationModule {
 			ngModule: FluffySpoonAuthenticationModule,
 			providers: [
 				{ provide: REQUEST_TOKEN_URL, useValue: requestTokenUrl },
+                <FactoryProvider>{
+					provide: TokenContainer,
+					useFactory: getTokenContainer
+                },
 				<ClassProvider>{
 					provide: HTTP_INTERCEPTORS,
 					useClass: AuthenticationHttpInterceptor,
 					deps: [TokenContainer],
 					multi: true
 				},
-                <FactoryProvider>{
-					provide: TokenContainer,
-					useFactory: getTokenContainer
-                },
                 <FactoryProvider>{
 					provide: AuthenticationService,
 					useFactory: getAuthenticationService,
