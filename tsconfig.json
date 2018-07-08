@@ -1,6 +1,6 @@
 ﻿{
 	"compilerOptions": {
-		"baseUrl": ".",
+		"baseUrl": "./src",
 		"declaration": true,
 		"stripInternal": true,
 		"experimentalDecorators": true,

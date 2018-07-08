@@ -18,14 +18,9 @@
 		"url": "https://github.com/ffMathy/FluffySpoon.Angular.Authentication.Jwt/issues"
 	},
 	"homepage": "https://github.com/ffMathy/FluffySpoon.Angular.Authentication.Jwt#readme",
-	"devDependencies": {},
+	"devDependencies": {
+	},
 	"dependencies": {
-		"@angular/common": "^6.0.7",
-		"@angular/core": "^6.0.7",
-		"@angular/http": "^6.0.7",
-		"rxjs": "^5.5.2",
-		"tslib": "^1.9.3",
-		"typescript": "^2.7.2"
 	},
 	"peerDependencies": {
 		"@angular/common": "5.0.3",
