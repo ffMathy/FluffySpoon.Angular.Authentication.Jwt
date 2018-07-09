@@ -6,7 +6,7 @@
 	"typings": "./dist/Index.d.ts",
 	"scripts": {
 		"transpile": "ngc",
-		"build": "npm run transpile"
+		"build": "tsc && npm run transpile"
 	},
 	"repository": {
 		"type": "git",
