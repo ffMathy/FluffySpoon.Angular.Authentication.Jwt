@@ -4,7 +4,8 @@
 
 /.vs/
 /node_modules/
+/dist/
 *.js
 *.d.ts
 *.js.map
-*.json
+*.metadata.json

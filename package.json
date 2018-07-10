@@ -1,33 +1,37 @@
 {
+	"$schema": "./node_modules/ng-packagr/package.schema.json",
 	"name": "@fluffy-spoon/angular.authentication.jwt",
 	"version": "1.0.0",
 	"description": "",
 	"main": "./dist/Index.js",
 	"typings": "./dist/Index.d.ts",
 	"scripts": {
-		"transpile": "ngc",
-		"build": "tsc && npm run transpile"
+		"build": "ng-packagr -p package.json"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/ffMathy/FluffySpoon.Angular.Authentication.Jwt.git"
 	},
+	"private": false,
 	"author": "",
 	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/ffMathy/FluffySpoon.Angular.Authentication.Jwt/issues"
 	},
 	"homepage": "https://github.com/ffMathy/FluffySpoon.Angular.Authentication.Jwt#readme",
-	"devDependencies": {},
-	"dependencies": {},
-	"peerDependencies": {
-		"@angular/common": "5.0.3",
+	"devDependencies": {
+		"ng-packagr": "^3.0.3",
+		"tsickle": "^0.32.0",
 		"@angular/compiler": "5.0.3",
 		"@angular/compiler-cli": "5.0.3",
-		"@angular/core": "5.0.3",
-		"tslib": "latest",
 		"typescript": "2.7.2",
-		"rxjs": "^5.5.2",
-		"zone.js": "~0.8.26"
-	}
+		"@angular/common": "5.0.3",
+		"@angular/core": "5.0.3"
+	},
+	"ngPackage": {
+		"lib": {
+			"entryFile": "./src/Index.ts"
+		}
+	},
+	"dependencies": {}
 }
