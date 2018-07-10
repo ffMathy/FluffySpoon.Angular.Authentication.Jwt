@@ -4,3 +4,7 @@
 
 /.vs/
 /node_modules/
+*.js
+*.d.ts
+*.js.map
+*.json

@@ -1,8 +1,10 @@
-﻿import { Injectable } from '@angular/core';
+﻿import { Injectable, InjectionToken, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TokenContainer } from './TokenContainer';
 
 import 'rxjs/add/operator/toPromise';
+
+export const REQUEST_TOKEN_URL: InjectionToken<string> = new InjectionToken<string>('REQUEST_TOKEN_URL');
 
 @Injectable()
 export class AuthenticationService {
@@ -35,7 +37,7 @@ export class AuthenticationService {
     constructor(
         private http: HttpClient,
 		private tokenContainer: TokenContainer,
-		private tokenUrl: string)
+		@Inject(REQUEST_TOKEN_URL) private tokenUrl: string)
     {
     }
 

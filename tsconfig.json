@@ -1,6 +1,5 @@
 ﻿{
 	"compilerOptions": {
-		"baseUrl": "./src",
 		"declaration": true,
 		"stripInternal": true,
 		"experimentalDecorators": true,
@@ -8,14 +7,6 @@
 		"noImplicitAny": false,
 		"module": "es2015",
 		"moduleResolution": "node",
-		"paths": {
-			"@angular/core": [
-				"node_modules/@angular/core"
-			],
-			"rxjs/*": [
-				"node_modules/rxjs/*"
-			]
-		},
 		"rootDir": "./src",
 		"outDir": "./dist",
 		"sourceMap": true,
